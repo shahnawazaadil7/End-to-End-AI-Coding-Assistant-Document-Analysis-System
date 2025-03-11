@@ -8,6 +8,7 @@ from langchain_core.prompts import (
     AIMessagePromptTemplate,
     ChatPromptTemplate
 )
+
 # Custom CSS styling
 st.markdown("""
 <style>
@@ -43,19 +44,43 @@ st.markdown("""
         background-color: #2d2d2d !important;
         color: white !important;
     }
+    
+    /* Card styling */
+    .card {
+        background-color: #2d2d2d;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .card img {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+    }
+    .card h2 {
+        color: #ffffff;
+    }
+    .card p {
+        color: #ffffff;
+    }
 </style>
 """, unsafe_allow_html=True)
-st.title("🧠 DeepSeek Code Companion")
-st.caption("🚀 Your AI Pair Programmer with Debugging Superpowers")
+
+st.title("🧠 GenAI Chatbot for College Major Project")
+st.caption("🚀 An Advanced AI Pair Programmer with Debugging Superpowers")
 
 # Sidebar configuration
 with st.sidebar:
-    st.header("⚙️ Configuration")
-    selected_model = st.selectbox(
-        "Choose Model",
-        ["deepseek-r1:1.5b", "deepseek-r1:3b"],
-        index=0
-    )
+    st.image("/Users/shahnawazaadil/Desktop/Github/Gen-AI-With-Deep-Seek-R1/1702675497539.jpeg", 
+         use_container_width=True)
+
+    # Add your details
+    st.markdown("""
+        <h2>Shahnawaz Aadil</h2>
+        <p>CSE-Data Science Student</p>
+        <p>Passionate about AI and Machine Learning</p>
+        <p>Contact: shahnawazaadil7@gmail.com</p>
+    """, unsafe_allow_html=True)
     st.divider()
     st.markdown("### Model Capabilities")
     st.markdown("""
@@ -67,15 +92,11 @@ with st.sidebar:
     st.divider()
     st.markdown("Built with [Ollama](https://ollama.ai/) | [LangChain](https://python.langchain.com/)")
 
-
 # initiate the chat engine
-
-llm_engine=ChatOllama(
-    model=selected_model,
+llm_engine = ChatOllama(
+    model="deepseek-r1:1.5b",
     base_url="http://localhost:11434",
-
     temperature=0.3
-
 )
 
 # System prompt configuration
@@ -87,6 +108,7 @@ system_prompt = SystemMessagePromptTemplate.from_template(
 # Session state management
 if "message_log" not in st.session_state:
     st.session_state.message_log = [{"role": "ai", "content": "Hi! I'm DeepSeek. How can I help you code today? 💻"}]
+    st.session_state.greeting_sent = True
 
 # Chat container
 chat_container = st.container()
@@ -101,16 +123,17 @@ with chat_container:
 user_query = st.chat_input("Type your coding question here...")
 
 def generate_ai_response(prompt_chain):
-    processing_pipeline=prompt_chain | llm_engine | StrOutputParser()
+    processing_pipeline = prompt_chain | llm_engine | StrOutputParser()
     return processing_pipeline.invoke({})
 
 def build_prompt_chain():
     prompt_sequence = [system_prompt]
     for msg in st.session_state.message_log:
+        content = msg["content"].replace("{", "{{").replace("}", "}}")
         if msg["role"] == "user":
-            prompt_sequence.append(HumanMessagePromptTemplate.from_template(msg["content"]))
+            prompt_sequence.append(HumanMessagePromptTemplate.from_template(content))
         elif msg["role"] == "ai":
-            prompt_sequence.append(AIMessagePromptTemplate.from_template(msg["content"]))
+            prompt_sequence.append(AIMessagePromptTemplate.from_template(content))
     return ChatPromptTemplate.from_messages(prompt_sequence)
 
 if user_query:
