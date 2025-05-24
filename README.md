@@ -41,7 +41,7 @@ Built using the **DeepSeek-R1 1.5B** model via **Ollama**, this tool is ideal fo
 ## 📦 Installation
 
 1. **Clone the Repository**
-   ```bash
+```bash
    git clone https://github.com/shahnawazaadil7/genai-coding-assistant.git
    cd genai-coding-assistant
    ```
@@ -49,21 +49,21 @@ Built using the **DeepSeek-R1 1.5B** model via **Ollama**, this tool is ideal fo
 2.	Set Up Python Environment
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
 
 ```
 3.	Install and Start Ollama
-	•	Install Ollama
-	•	Run:
+•	Install Ollama
+•	Run:
 ```
-ollama run deepseek-r1:1.5b
+   ollama run deepseek-r1:1.5b
 ```
 
 4.	Run the Streamlit App
 ```
-streamlit run main.py
+   streamlit run main.py
 ```
 
 
