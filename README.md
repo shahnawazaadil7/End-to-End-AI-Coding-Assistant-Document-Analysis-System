@@ -70,7 +70,7 @@ Built using the **DeepSeek-R1 1.5B** model via **Ollama**, this tool is ideal fo
 ⸻
 
 📁 File Structure
-
+```
 ├── main.py                 # Entry point with routing UI
 ├── chat.py                 # Coding assistant logic
 ├── docu.py                 # Document analysis logic
@@ -78,7 +78,7 @@ Built using the **DeepSeek-R1 1.5B** model via **Ollama**, this tool is ideal fo
 ├── requirements.txt        # Python dependencies
 ├── README.md               # Project description
 └── documents/              # Directory for uploaded documents
-
+```
 
 ⸻
 
